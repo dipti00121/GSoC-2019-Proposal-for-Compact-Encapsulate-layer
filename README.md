@@ -1,2 +1,326 @@
 # GSoC-2019-Proposal-for-Compact-Encapsulate-layer
 GSoC 2019 Proposal for Compact / Encapsulate layer
+
+
+
+Abstract 
+
+Deep Learning , although being old subfield of Machine Learning , came to prominence in early 2010, and all the prominent perceptual problems have nearly been solved with massive result. Now, we find deep learning in almost all fields and this is mostly because of the ability and robustness to deal with the problem. With this advent, deploying deep learning model with many successive layers can be very hectic and often demands writing many line of code to implement layers in the model. So dealing with this , there is no such way or implementation known where all the layers is defined in one line of code designed for tensorflow. Further while building the compact/encapsulated layer it shouldn’t intervene with the performance of the model. In this proposal i have given my insight of my methodology in development of compact layer which would not compromise with the model performance .I have build a prototype called the compact layer and done modeling using it and there is no such tradeoff with the performance . Compact layer  has shown no such latency and performing exactly as it would have implemented without the compact layer.
+
+
+
+Introduction
+
+The advent in Deep Learning has brought about a bizarre revolution and the once thought “impossible to solve” perceptual problem and thought to be solved only by humans are solved. With this result and advancement in research and possible computational intensive devices being manufactured, the deep learning is taking a surreal moves and this will bring about more change. And with this development , models in deep learning model are rigorously used and they are used almost in every deep learning problem. With this, it is very worthless and most importantly when the layers of the model has to be extensively type and this is very tedious either for 2 reasons, when the developer has to deal with the other complexities rather than fixating over the model or second the person is greatly involved in sudden deployment to see the result.
+With the advancement of deep learning , the layers are increasingly significantly and this increaseness will also increase the robustness and achieve high representativeness[1], this would certainly require writing more codes for it. The future is new AI facade where deployment of Deep Neural Layer Network will be a must for any AI driven task, and since we are already binding up with ensuing complexities , coding repetitively for each layer does not usually sound intuitive , however this could have been already solved before. A similar job has been done but is not explicitly claimed for the “compact layer/ encapsulated layer” by the Fast AI using Pytorch , but there is no such thing as in Tensorflow. Compact Layer / Encapsulated layer are must as there is no hard and fast rule to determine the number of hidden layers. Further designing the deep neural network architecture requires the developers to have experiential knowledge for determining the layers and since they have to solely rely on the training to check their model performance followed by testing , it becomes very tedious as the results are not provided instantaneously and the developers always have to shrink or increase  the line of code for implementing each layer in the deep learning model architecture.
+and this become tiresome when the number of layers are significantly large.
+Since deep learning is solely data driven and the performance significantly increases with the amount of data , we should estimate this from the following graph   
+And with the advancement in deep learning, the IOT is on the verge of breakthrough too, and with estimation of 450 Billion dollar revenue by 2020, 28 Billion connected devices and 14.2 Trillion Dollar added to the global revenue by 2031 [3], there is no chance or clue that deep learning will not play a significant role but it will be the most important or innate part of the IOT device and with this deploying the deep learning model in IOT devices with just few lines of code will make it more modular and reduce complexity and the developer has to solely focus on the intent of the device rather than dealing with the other codes. Since there is no such law for the deep learning determining the number of layers as we descend through time like the Moore’s law (observation that the number of transistors in a dense integrated circuit doubles about every two years) but the observation in growth of  deep learning is increasing exponentially 
+ 
+Image Source : Google Images
+
+Deep learning interest over time   
+
+Image Source :Google Images
+
+
+
+With this prospect when the deep learning is increasing significantly and there is no doubt about it , deploying a deep learning model with a few lines of code will be a great boon for both the developers and research scientist who are always in hit and trial method to find the best moves to deploy their model. This would reduce the code complexity, aggregating all the parameters at one place , and also reducing the typos and making the code look organised and make it perceivable by others. 
+Objectives 
+The main idea behind the compact layer is not to get stuck with any particular architecture but to be very generalized and accommodate any given condition/ parameter without compensating the model performance . The objective is tentative and likely to get more objectives as deep learning is very explorative 
+Here i have categorized the five important objective :
+•	Building the Core layer comprising all the functionality
+•	Building the feedforward layer
+•	Building the  Convolution layer
+•	Building the Recurrent layer
+•	Building the Visualization function
+
+Present Status of the Work
+The compact / encapsulated layer has been made in different classes as per the type of layer and function required . To set up all the deep learning models  , Keras with Tensorflow as backend is used. The sole reason why Keras is being used is for its ease and understandability. In order to make compact layer more lucid, same argument name as in Keras is used. This is done to make the compact layer very easy to use and the end user/developer has not to memorize or fixate with the new arguments. However , a few new arguments has been introduced and this is taking into consent to make it meaningful , so that user have the idea about the purpose of the argument.
+ The compact layer comprises of  feedforward class, the core class, the CNN class, the RNN class and then the visualize class. 
+The feedforward class is used for building the feedforward deep neural network, the core class comprises of all the feature of all the class and all its functionality , the CNN class comprises of all the CNN model and RNN class comprises all the RNN class functionality. This entire class buildup is strictly according to the Keras Documentation.
+To give a gist about the compact layer , a following representation  might give a clear picture.
+
+ 
+
+
+
+
+
+
+The Core Class
+The Core Class comprises all the functionality of all the deep learning model under one class. This a tentative class model, addition of feature from advanced activation layer, noise layer, merge layer , embedding layer will be added.
+This core class was made with an intent that the user doesn't have to call different library and while making model there must be requirement of functions which are not explicitly designed for the given model we are building.  
+For instance, if we are inetegrating the feature of RNN and CNN, the user can call the function from core class without explicitly calling their libraries. The function called can be any order provided all the arguments are correctly supplied. 
+Eg: 
+ Building this model with Compact class
+
+ 
+
+from compact import core
+cc=core()
+cc.Sequential()
+cc.Conv2D(32,(3,3),input_shape=(28,28,1),padding='same',activation='linear')
+cc.MaxPooling2D((2,2),padding='same')
+cc.Conv2D(64,(3,3),padding='same',activation='linear')
+cc.MaxPooling2D((2,2),padding='same')
+cc.Conv2D(28,(3, 3),activation='linear',padding='same')
+cc.MaxPooling2D((2,2),padding='same')
+cc.Flatten()
+cc.Dense(128,activation='linear')
+cc.add(Dense(num_classes,activation='softmax'))
+
+As you can see, i really don't have to declare model separately , i don't have to call all the libraries pertaining to the model, i can used RNN model features (if required) without explicitly calling them from its library. 
+
+We see that we still have to write so many lines of code, however this is the aggregation of  general features of all the models, where the user has to write or deploy a hybrid model and is less worried about the line of codes but about the model.
+The methodology and the arguments for the model and the problems which might arise and how it is resolved has been briefly discussed in the methodology section of the proposal.
+
+
+The Feedforward Class
+
+In this class, the feedforward deep learning model is only considered. This class will help deploy model with any number layers without explicitly implementing it. This may include choosing any size of hidden layer vector , hidden layer activation . The additional time complexity is only the for loop which iterates over the number of hidden layer. The sole purpose for the development of feedforward class was the implementation of the 
+The following is the diagrammatic representation of the feedforward and its functionality with example and the methodology for the same is described briefly in the methodology section.
+
+ 
+
+
+
+This model, can be easily be implemented with just three line of code.
+>>>from compact import feedforward
+>>>ff=Sequential()
+>>>ff.model(nos_layers=5,model_type='Sequential',input_dim=5,hidden_dim=[8,16,32,48], output_dim=3,kernel_initializer='uniform',loss='mae',dropout=0.2,optimizer='adam',metrics=['accuracy'],hid_act='relu',out_act='linear')
+
+As we can see from the code itself , that we don't have to explicitly declare for each layer and also the vector for the hidden layer can be designed with varying size and say for instance, we want the hidden layers’ vector to have the same size, we can declare it by just assigning the size of the vector without using the list. For example :
+ff.model(nos_layers=5,model_type='Sequential',input_dim=5,hidden_dim=128, output_dim=3,kernel_initializer='uniform',loss='mae',dropout=0.2,optimizer='adam',metrics=['accuracy'],hid_act='relu',out_act='linear')
+
+So this simplifies the varying and non varying size of the vector and this compact layer reduces the number of line of code for its implementation. If we were to declare it without using the compact , it would have took 10 lines of code (using Keras).
+ The arguments and introduction of new arguments have been briefly described in the methodology section of the proposal.
+
+The CNN class
+Just like feedforward class, the CNN class has been mainly introduce to deal with the Convolution Neural Networks.It is arguably the most popular deep learning architecture. CNNs are widely used and are very efficient because of their use of Convnets.
+ The CNN class in compact layer works the same way, aggregating all the parameter together and from there, expanding it internally as stated. The methodology as i depicted previously has been organised in the Methodology section of the proposal.
+
+Building the Resnet with the Compact’s CNN class 
+
+>>>from compact import cnn
+>>>cc=cnn()
+>>>cc.model(Conv_type=['2D']*32,MaxPooling_type=['2D']*4,Pattern=['C']*6+[‘M’]+[‘C’]*8+[‘M’]+[‘C’]*12+[‘M’]+[‘C’]*6+[‘M’],MP_strides=None, activation='relu',filters=[64]*6+[128]*8+[256]*12+[512]*6, kernel_size=[3]*32,input_shape=(28,28,1))
+
+
+
+As, we can see that we can easily implement the given resnet architecture without explicitly declaring all the layers . Thus compact class makes implementation of this architecture without writing many lines of code.  Thus is avoids ambiguity , typos errors as well as saving time. Thus it makes it available for the ease of implementation of the large architecture with just 3 lines of code. 
+Understanding what this code means:
+The Conv_type expands to the list with 32 ‘2D’ elements. This means that there are 32 layers of 2D Convolution layer. Same goes with using the MaxPooling_type which expands to list comprising 4 elements of ‘2D’ which signify that there are 4 layers of MaxPooling layer. Pattern=['C']*6+[‘M’]+[‘C’]*8+[‘M’]+[‘C’]*12+[‘M’]+[‘C’]*6+[‘M’] signifies that there are 6 Convolutional layers in succession followed the MaxPooling layer and then the 8 convolution layer and then the MaxPooling layer and then the 12 Convolution layer and then the MaxPooling layer and then 6 Convolution layer and then the MaxPooling layer.
+The type of convolution layer in this stacking of layer is determined by how they appear in the Conv_type list.Order of precedence in the list determines the convolution layer type. 
+ filters=[64]*6+[128]*8+[256]*12+[512]*6  comprises the list determines how the filter values be provided to each convolution layer. Same goes with the Kernel arguments.
+The extensive use of the list had made it very flexible for the implementation of this complex architecture. 
+
+
+Proposed Methodology
+
+In this section , i will briefly describe my methodology i carried out while building the compact layer classes and also describe how i will carry this out in the future work . I used the extensive use of the Keras documentation while building the compact class and i have intensively perform experiments to break the code. My approach has been lucid and opted for the hybrid of iterative and spiral method for the development of the compact layer. The main idea behind had been development of all the compact class had been breaking down the compact class in smaller chunks and then repeatedly adding feature and testing it. While this had greatly benefited me in two ways, it help me decide “what additional features” i can add without fixating over the previous code and secondly , building features in modules had made me concentrate over one feature.
+ 
+
+
+Since i have used Keras, i will be seeking the Keras documentation a numerous times as a reference.
+
+The core class
+ It comprises all the feature of all the model’s layer functionality, it can be considered as a general aggregation of all the function, method pertaining to all the models under one class.
+This help in us two main ways:
+The user doesn't have to call the library separately for its functionality
+The user can deploy model and use all the model’s method in any order. Since the compact layer has extensively used stack to carry out the model building, every time a new feature/functionality/method is added to the model, the model pops up from the stack , the new feature/functionality/method is added to the model and then pushed back. This reduces the tediousness where one have to repeat code for the sequential building of the model. 
+Since its the aggregation of all the methods/functions, all the arguments pertaining to the method is only provided  when that method/function  is being used. This significantly reduces the ambiguity and also makes it available for the user to notify which arguments they missed out.
+Since the compact class is built using Keras, same argument name has been been used and made it available like they had been using Keras. 
+Everytime a new layer is added to the model, the model to whom the new layer has to be implemented is popped out and then the new layer is appended to it and then it is pushed back onto the stack. This makes it easier to implement and the user doesn’t have to memorize the model name , it is all automatic. 
+
+
+The core class implementation flow chart
+ 
+
+What Core Class Comprises(tentative):
+
+Dense	Conv1D	Conv2D	Conv3D	MaxPooling1D	MaxPooling2D
+MaxPooling3D	Flatten	RNN	SimpleRNN	GRU	LSTM
+ConvLSTM2D	ConvLSTM2DCell	SimpleRNNCell	GRUCell	LSTMCell	CuDNNGRU
+CuDNNLSTM	Dropout	compile	fit	evaluate	summary
+
+The FeedForward Class
+The feedforward class is used to build the feedforward deep neural network. The feedforward class model takes all the arguments at one place and builds the model accordingly.
+The arguments 
+Arguments	Used for	Example
+nos_layers	Number of layers in the model	nos_layers=5
+model_type	Type of Model(Sequential/ Functional)	model_type= ‘Sequential’
+input_dim	Input dimesion 	input_dim=40
+output_dim	Output dimension	output_dim=2
+hidden_dim	Hidden dimension 	hidden_dim=4 if the hidden layer vector size is equal for all the hidden layers or [4,16,32] for varying hidden vector size for the hidden layers 
+hid_act	Hidden activation function	hid_act= ‘relu’
+out_act	Outer activation function	out_act= ‘linear’ / ‘sigmoid’
+kernel_initializer	initialising the weights	kernel_initalizer= ‘uniform’
+loss	required to compile a model	loss=’mae’
+metrics	used to judge the performance	metrics=[‘accuracy’]
+optimizer	to compile the model	optimizer= ‘adam’
+dropout	to regularize a deep neural network	dropout=0.2
+
+When all the arguments are provided, feedforward class checks for the model type first, if its sequential or functional. Here for this context we are sticking with the the Sequential type . Then the feedforward creates the instance of the sequential class and then it checks for the number of layers provided, based on that number of layers minus 2 (nos_layers-2) is used for the number of hidden layer. As the input layer counts to one and the output layer counts to one, it leaves out the hidden_layer with nos_layer - 2. The feedfoward initializes the input layer and its activation function and its dimension from the parameter hid_act and input_dim respectively. Then the feedforward checks for the hidden vector provided, if its varying size or equal size vector from the list. If the list comprises multiple values, a loop iterating to the size of the list of the hidden_dim or the nos_layers-2 iterates and accordingly the hidden layer is implemented with the hidden activation function, kernel_initializer arguments.The outer layer takes in the argument value from the argument provided in the beginning which are out_dim for the dimension of the output vector and then the outer_act for the outer activation function and kernel_initializer for initializing the weight.
+Here is the flow chart describing the process:
+ 
+A general stack is implemented which loads in the model and makes it available for the other class for stacking up with different other models in the compact layer.
+
+The CNN Class
+
+The CNN class model is strictly for the Convolutional layer. In this class, all the argument are accumulated at one place and new parameters had been introduced.  
+The new parameters are:
+Conv_type: It can take list as input for multiple type of Convolutions layer and as string for single type. The same sequence in which the parameters of Conv_type occurs, is the same in which the parameter is implemented while building the model. 
+Example : Conv_type=[‘3D’,’2D’,’1D’] or Conv_type =’1D’
+The model will build with first layer as with 3D convolution layer followed by 2D and the 1D and when the parameter is a single string,it is implemented with a single Convolution layer of that type.
+MaxPooling_type= same as Conv_type and same technique as in Conv_type
+Pattern=[‘C’,‘C’,‘M’,‘C’,‘C’, ‘M’]  It takes list as input and it determines out how the Convolution layer will be stacked with the other layers. From the given example, this can be understand in a way , that while building the CNN model, it will follow the convolution layer followed by another convolution and then the max pooling layer. And the type of the convolution layer will be determined by the Conv_type list in which the type is determined by the type it occurs in the list.
+This can be well described by taking an example
+>>>from compact import cnn
+>>>cc=cnn()
+>>>cc.model(Conv_type=['3D','2D','1D'],MaxPooling_type=['3D','2D','1D'],Pattern=['C','M','C','M','C','M'],MP_strides=None, activation='relu',filters=[64,64,32], kernel_size=[3,3,3],input_shape=(28,28,1))
+This will build a 3 layered CNN model with first layer being 3D Convolutional layer , then from the pattern list we can see its C followed by M, then the next layer will be Max Pooling and its type will be fetched from the MaxPooling_type, hence 3D Max Pooling will be stacked next to the 3D Convolutional layer, and then after the   3D Max Pooling, 2D Convolutional layer followed by 2D Max Pooling followed by 1D Convolutional layer followed by 1D Max Pooling . The filters and Kernel size for the Convolutional layer is fetched from the filter and Kernel list and this is according to their precedence.
+All the arguments for the CNN model are provided default values as in Keras Documentation, if they are not used while building the model, they are provided the default value. We also see that there are common arguments in the Max Pooling and Convolutional layer , in that case MP_strides has been introduced, this MP_strides refer to the strides in the Max Pooling layer and the strides refers to the strides in the Convolutional  layer.
+
+The arguments in the CNN model:
+
+Arguments	Used for 	Example
+Conv_type	Type of Convolutional layer	‘1D’ or[‘1D’,’2D’,..]
+Pattern	Determining how the different layers are stacked together. 	[‘C’,’M’ , ‘C’ , ‘M’]
+MaxPooling_type	Type of Max Pooling layer	‘1D’ or [‘1D’ , ‘2D’ , ‘3D’]
+filters	Integer, the dimensionality of the output space	32 or [32,64,...]
+kernel_size	An integer or tuple/list of a single integer,specifying the length of the 1D convolution window.	3 or [3,3,...]
+input_shape	tuple of integers providing the shape of the model.	(28,28,1)
+strides	An integer or tuple/list of 2 integers, specifying the strides of the convolution along the height and width	(2,2)
+dilation_rate	an integer or tuple/list of 2 integers, specifying the dilation rate to use for dilated convolution. Can be a single integer to specify the same value for all spatial dimensions.	(2,2)
+activation	Activation function to use	‘linear’,’relu’,etc
+use_bias	Boolean	True/False
+kernel_initializer	Initializer for the kernel weights matrix	‘Uniform’, ‘normal’ etc
+data_format	The ordering of the dimensions in the inputs.	“channels_last”
+padding	One of "valid", "causal" or "same" (case-insensitive).  "valid" means "no padding". "same" results in padding the input such that the output has the same length as the original input.  "causal" results in causal (dilated) convolutions, e.g. output[t] does not depend on input[t + 1:]	“valid”
+MP_strides	Integer, or None. Factor by which to downscale.	(2,2)
+pool_size	Integer, size of the max pooling windows.	(2,2)
+model_type	Sequential/functional	‘Sequential’
+bias_constraint	Constraint function applied to the bias vector	
+kernel_constraint	Constraint function applied to the kernel matrix	max_norm(2.)
+activity_regularizer	Regularizer function applied to the output of the layer	(0.01)
+bias_regularizer	Regularizer function applied to the bias vector 	(0.01)
+bias_initializer	Initializer for the bias vector	zeros
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Flow chart describing the functionality
+
+ 
+
+
+The RNN Class
+The RNN class as observed from previous motives , will be strictly for the Recurrent layer.  The RNN Class is still in building phase. I will use the same procedure as building the CNN class. All the arguments will be aggregated at one place and one with common name arguments in different RNN models , will be given new argument name to avoid ambiguity. And use of list for taking multiple values if the different layers are involved , will be used .
+The RNN class will be using the same methodology as deviced in the CNN class. The arguments will be same as in Keras Documentation and this will be 
+
+The Visualization function class
+The visualization class is the one which will hold all model information in a stack and will view it in terminal in a stack way , so that the user may have idea , how the layers have been implemented so far. This will also contain the activation function used, the type of layer and other important feature pertaining to the layer.
+Timeframe for carrying out the Project
+
+Time Period 	Activities	Milestones
+May 6th, 2019
+To May 26th, 2019
+(Community Bonding Period)	1.Communicate with mentors.
+2. Finalize all the plans and activities.
+3.Finalize the technology stack, platform to use.
+4. Finalize the coding standards, documentation,
+Coding convention and software development model like spiral/ iterative , git branching methodology
+5. Finalize the communication media , channels , mailing list.
+6. Understanding the Keras documentation and tensorflow and other documentation required during the coding as reference	
+Tenure 1
+May 27th, 2019 to June 23rd, 2019	1.Create the Core class in compact layer
+2. Integrating all functionality of all the model under core class referning Keras, Tensorflow documentation.
+3. Brainstorming additional features and Integrating them.
+4. Creating model using core class and testing them.
+5. Generating test cases for the core class.
+6. Building the Visualization  function for the core class
+7.Creating Documentation for the core class	A core class comprising all the functionality of the all the model is created, which helps deploy model using functionality of different models under one class.
+Tenure 2
+June 24th to June 28th
+(Phase 1 Evaluation)	1.Integrate the feature sought by the community
+2. Deploy a staging environment for the community to test the model
+3.Improve Test Coverage and  Bug Fixes
+4.Building model using the core class and comparing its performance with and without the core class and during further optimization.
+4. Brainstorming with community for generating additional features	A model having functionality of all the deep learning model can easily be implemented under the compact layer
+Tenure 3
+June 29th to July 21st 	1.Building the Feedforward and the Convolution layer 
+2.Refactoring code to accommodate the feedforward and the CNN class
+3.Integrating all the functionality of the Feedforward Neural Network  and Convolutional layer.
+4. Building model using the compact layer and building test cases for the same.
+5. Building the Visualization function for the model.
+6. Creating Documentation 	Feedforward NN class and CNN class for deploying the feedforward and CNN model is created.
+Tenure 4
+July 22nd to July 26th
+(Phase 2 Evaluation)	1. Integrating the feature sought by the community
+2. Deploying environment for the community to test the model. Building the test cases.
+3.Test Coverage and Bug Fixes.
+4.Brainstorming new features which can be implemented with the community.	A robust Compact layer class which can deploy the feedforward deep neural network model and CNN model with just few lines of code. Visualization feature which helps monitor how layers are stacked together.
+Tenure 5
+July 27th to Aug 18th	1.Building the RNN class
+2.Refactoring code to accommodate the new RNN class.
+3.Integrating all the feature of the Recurrent layer and devising technique to make it more concise.
+4.Building models using the RNN class and do further optimization.
+5. Building basic test cases and creating visualization function.
+6. Creating Final Documentation
+7.Adding user guidance and cosmetic changes
+8. Setting Version control
+9. Providing Terms of services, privacy policy ,etc if necessary 	A RNN class which can help build recurrent layer model is created.
+Tenure 6
+Aug19th to Aug 26th
+Final Week
+(Last Evaluation)	1.Integrating the new additional feature suggested by the community
+2. Staging environment for the community to carry out the testing 
+3.Fixing bux and test coverage
+4.Checking model performance with and without the compact layer 
+5. Brainstorming to accommodate new additional feature
+6. A final look up to the compact layer.
+	A final compact layer is built, which can help deploy any model , with just few lines of code. Reduce code repeatability and making it concise and ambiguousless.
+
+
+
+
+
+
+
+
+Conclusion
+The project Compact Layer / Encapsulated layer will help deploy model with ease and reduce the complexity how we implement the layer for the neural network. With the deep learning’s integration in almost every field, it becomes very necessary to have a tool / method which reduces the tedious way of writing code and bring in ease for deploying them. Compact layer will surely do , making deep learning more deep but being shallow.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
